@@ -275,7 +275,7 @@ namespace NGTQG {
 	}
 	auto &neighborIDs = quantizedGraph.getIDs(target.id);
 	size_t neighborSize = neighborIDs.size();
-	if ((neighborSize - neighborSize / NGTQ_SIMD_BLOCK_SIZE * NGTQ_SIMD_BLOCK_SIZE) <= 8)
+	if ((neighborSize - neighborSize / NGTQ_SIMD_BLOCK_SIZE * NGTQ_SIMD_BLOCK_SIZE) <= 12)
 	  neighborSize = neighborSize / NGTQ_SIMD_BLOCK_SIZE * NGTQ_SIMD_BLOCK_SIZE;
 	float ds[neighborSize + NGTQ_SIMD_BLOCK_SIZE];
 
