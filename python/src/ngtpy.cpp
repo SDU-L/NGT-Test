@@ -27,8 +27,10 @@
 #include	<pybind11/pybind11.h>
 #include	<pybind11/stl.h>
 #include	<pybind11/numpy.h>
+#include        <pybind11/embed.h>  //增
 
 namespace py = pybind11;
+using namespace py::literals;  //增
 
 class Index : public NGT::Index {
 public:
@@ -116,6 +118,14 @@ public:
    size_t numThreads = 16,
    bool debug = false
   ) {
+    //增
+    bool keepdims = true;
+    py::module np = py::module::import("numpy.linalg");
+    // np.seterr(divide='ignore',invalid='ignore');
+    py::array_t<double> objectsmod = np.attr("norm")(objects, "ord"_a = 2, "axis"_a = 1, "keepdims"_a = keepdims);
+    objects = objects/objectsmod;
+    //验证
+    //增
     py::buffer_info info = objects.request();
     if (debug) {
       std::cerr << info.shape.size() << ":" << info.shape[0] << ":" << info.shape[1] << std::endl;
@@ -867,7 +877,11 @@ py::array_t<uint32_t> batchSearchTmp(
     float resultExpansion,	// the number of inner resultant objects
     int edgeSize		// the number of used edges for each node during the exploration of the graph.
   ) {
+    bool keepdims = true;  //增
+    py::module np = py::module::import("numpy.linalg");  //增
     py::array_t<float> qobject(query);
+    py::array_t<float> qobjectmod = np.attr("norm")(qobject, "ord"_a = 2, "axis"_a = 1, "keepdims"_a = keepdims);  //增
+    qobject = qobject/qobjectmod;  //增
     py::buffer_info qinfo = qobject.request();
     std::vector<float> qvector(static_cast<float*>(qinfo.ptr), static_cast<float*>(qinfo.ptr) + qinfo.size);
     try {
