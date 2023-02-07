@@ -48,7 +48,7 @@ public:
 #else
     creation.localCentroidLimit = args.getl("c", 65000);
 #endif
-    creation.localDivisionNo = args.getl("N", 0);
+    creation.localDivisionNo = 64;
     creation.batchSize = args.getl("b", 1000);
     creation.localClusteringSampleCoefficient = args.getl("s", 10);
     {
@@ -80,7 +80,7 @@ public:
       }
     }
 #ifdef NGTQ_QBG
-    creation.localIDByteSize = args.getl("B", 1);
+    creation.localIDByteSize = 2;
 #endif
       
     creation.globalEdgeSizeForCreation = args.getl("E", 10);
@@ -231,7 +231,7 @@ public:
   void getOptimizationParameters() {
     optimization.numberOfObjects = args.getl("o", 1000);
     optimization.numberOfClusters = args.getl("n", 0);
-    optimization.numberOfSubvectors = args.getl("m", 0);
+    optimization.numberOfSubvectors = 64;
 
     optimization.randomizedObjectExtraction = true;
 
