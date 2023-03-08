@@ -124,9 +124,6 @@ public:
     // np.seterr(divide='ignore',invalid='ignore');
     py::array_t<double> objectsmod = np.attr("norm")(objects, "ord"_a = 2, "axis"_a = 1, "keepdims"_a = keepdims);
     objects = objects/objectsmod;
-    std::cerr << "运行到ngtpy.cpp：126" << std::endl;  // 测试
-    std::cerr << "objects的类型为 " << typeid(objects).name() << std::endl;  // 测试
-    std::cerr << objects << std::endl;  // 测试
     //验证
     //增
     py::buffer_info info = objects.request();
